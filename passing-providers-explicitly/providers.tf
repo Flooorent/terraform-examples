@@ -31,16 +31,20 @@ provider "aws" {
 }
 
 # All workspace-specific providers
+locals {
+  workspace-url-prefix = "db-cs"
+}
+
 provider "databricks" {
   alias    = "passing-providers-explicitly-01"
-  host     = "https://db-cs-passing-providers-explicitly-01-k52d62.cloud.databricks.com"
+  host     = "https://${local.workspace-url-prefix}-passing-providers-explicitly-01.cloud.databricks.com"
   username = var.databricks_account_username
   password = var.databricks_account_password
 }
 
 provider "databricks" {
   alias    = "passing-providers-explicitly-02"
-  host     = "https://db-cs-passing-providers-explicitly-02-5rru9z.cloud.databricks.com"
+  host     = "https://${local.workspace-url-prefix}-passing-providers-explicitly-02.cloud.databricks.com"
   username = var.databricks_account_username
   password = var.databricks_account_password
 }

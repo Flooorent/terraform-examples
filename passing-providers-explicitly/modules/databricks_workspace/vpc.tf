@@ -4,7 +4,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "2.70.0"
 
-  name = local.prefix
+  name = var.workspace_name_prefix
   cidr = var.cidr_block
   azs  = data.aws_availability_zones.available.names
   tags = var.tags
@@ -30,7 +30,7 @@ module "vpc" {
 resource "databricks_mws_networks" "this" {
   provider           = databricks.mws
   account_id         = var.databricks_account_id
-  network_name       = "${local.prefix}-network"
+  network_name       = "${var.workspace_name_prefix}-network"
   security_group_ids = [module.vpc.default_security_group_id]
   subnet_ids         = module.vpc.private_subnets
   vpc_id             = module.vpc.vpc_id

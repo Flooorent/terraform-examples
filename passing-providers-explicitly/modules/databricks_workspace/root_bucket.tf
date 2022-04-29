@@ -1,12 +1,12 @@
 resource "aws_s3_bucket" "root_storage_bucket" {
-  bucket = "${local.prefix}-rootbucket"
+  bucket = "${var.workspace_name_prefix}-rootbucket"
   acl    = "private"
   versioning {
     enabled = false
   }
   force_destroy = true
   tags = merge(var.tags, {
-    Name = "${local.prefix}-rootbucket"
+    Name = "${var.workspace_name_prefix}-rootbucket"
   })
 }
 
@@ -30,5 +30,5 @@ resource "databricks_mws_storage_configurations" "this" {
   provider                   = databricks.mws
   account_id                 = var.databricks_account_id
   bucket_name                = aws_s3_bucket.root_storage_bucket.bucket
-  storage_configuration_name = "${local.prefix}-storage"
+  storage_configuration_name = "${var.workspace_name_prefix}-storage"
 }
